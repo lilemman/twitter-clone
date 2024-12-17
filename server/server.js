@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
+const userRoute = require("./routes/userRoute");
 const cookieParser = require("cookie-parser");
 
 dotenv.config();
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true })); // to parse form data
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoute);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
