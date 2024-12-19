@@ -4,9 +4,16 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const userRoute = require("./routes/userRoute");
 const cookieParser = require("cookie-parser");
+const cloudinary = require("cloudinary").v2;
 
 dotenv.config();
 connectDB();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const app = express();
 const PORT = process.env.PORT;
