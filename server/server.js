@@ -6,6 +6,7 @@ const userRoute = require("./routes/userRoute");
 const cookieParser = require("cookie-parser");
 const cloudinary = require("cloudinary").v2;
 const postRoute = require("./routes/postRoute");
+const notificationRoute = require("./routes/notificationRoute");
 
 dotenv.config();
 connectDB();
@@ -27,6 +28,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoute);
 app.use("/api/posts", require("./routes/postRoute"));
+app.use("/api/notifications", notificationRoute);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
