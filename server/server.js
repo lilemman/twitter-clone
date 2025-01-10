@@ -1,5 +1,7 @@
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
 const express = require("express");
 const dotenv = require("dotenv");
+const path = require("path");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const userRoute = require("./routes/userRoute");
@@ -19,6 +21,7 @@ cloudinary.config({
 
 const app = express();
 const PORT = process.env.PORT;
+// const __dirname = path.resolve();
 
 //body parser
 app.use(express.json({ limit: "5mb" }));
@@ -30,6 +33,14 @@ app.use("/api/users", userRoute);
 app.use("/api/posts", require("./routes/postRoute"));
 app.use("/api/notifications", notificationRoute);
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/dist", "index.html"));
+  });
+} else {
+  console.log("Running in development mode");
+}
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
